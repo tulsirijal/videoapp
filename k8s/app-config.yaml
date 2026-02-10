@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: videoapp-config
+  namespace: videoapp
+data:
+  NODE_ENV: "production"
+  PORT: "8080"
+  DATABASE_HOST: "postgres"
+  EMAIL_HOST: "smtp.google.com"
+  EMAIL_PORT: "465"
+  CLOUDINARY_CLOUD_NAME: "dup3ymj3p"
+  DATABASE_NAME: "videoapp"
+  LOG_LEVEL: "info"
+
