@@ -7,12 +7,11 @@ const authMiddleware = async (req, res, next) => {
     if (req.method === 'OPTIONS') {
       return next();
     }
-    const token = req.cookies.accessToken;
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.status(401).json({ error: "Authentication required" });
     }
-
 
     const payload = jwt.verify(token, JWT_ACCESS_SECRET);
 

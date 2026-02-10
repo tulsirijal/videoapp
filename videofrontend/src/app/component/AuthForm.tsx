@@ -34,7 +34,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     const endpoint = isLogin ? "/login" : "/register";
 
     const res = await api.post(endpoint, { email, password, firstname, lastname });
-    login(res.data.user); 
+    login(res.data.user, res.data.access, res.data.refresh); 
     
   } catch (err: any) {
     setError(err.response?.data?.message || "Auth failed");

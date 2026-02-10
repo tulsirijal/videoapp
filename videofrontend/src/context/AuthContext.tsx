@@ -12,7 +12,7 @@ import api from "@/lib/axiosInstance";
 
 interface AuthContextType {
   user: User | null;
-  login: (userData: User) => void;
+  login: (userData: User, accessToken: string, refreshToken: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
@@ -41,11 +41,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     };
 
     initializeAuth();
-
   }, []);
 
-  const login = (userData: User) => {
+  const login = (userData: User, accessToken: string, refreshToken: string) => {
     setUser(userData);
+    localStorage.setItem("accesstoken", accessToken);
+    localStorage.setItem("refreshtoken", refreshToken);
   };
 
   const logout = async () => {
@@ -53,6 +54,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       await api.post("/logout");
     } finally {
       setUser(null);
+      localStorage.removeItem("accesstoken");
+      localStorage.removeItem("refreshtoken");
     }
   };
 

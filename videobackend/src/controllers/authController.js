@@ -108,7 +108,8 @@ export const login = async (req, res) => {
         firstname: existingUser.firstname,
         lastname: existingUser.lastname,
       },
-      
+      access,
+      refresh
     });
   } catch (error) {
     console.log("Error:" + error);
@@ -118,7 +119,7 @@ export const login = async (req, res) => {
 
 export const refresh = async (req, res) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.body.refreshToken || req.cookies.refreshToken;
     if (!refreshToken) {
       return res.status(401).json({ message: "No refresh token" });
     }
@@ -142,7 +143,7 @@ export const refresh = async (req, res) => {
       sameSite:"none",
     });
 
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ access});
   } catch (error) {
     return res.status(401).json({ message: "Refresh failed" });
   }
