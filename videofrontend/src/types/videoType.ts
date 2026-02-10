@@ -8,9 +8,15 @@ export interface Video {
   thumbnail?: string;
   url: string;
   views: number;
-  createdAt: Date;
+  createdAt: Date | string;
   duration: number;
   userId:number;
+  user:{
+    id:number;
+    firstname:string;
+    lastname:string;
+    avatar?:string;
+  }
   _count:{
     likes:number,
     comments:number
