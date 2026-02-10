@@ -4,7 +4,9 @@ import { JWT_ACCESS_SECRET } from "../config/index.js";
 
 const authMiddleware = async (req, res, next) => {
   try {
-
+    if (req.method === 'OPTIONS') {
+      return next();
+    }
     const token = req.cookies.accessToken;
 
     if (!token) {
