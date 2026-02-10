@@ -44,11 +44,15 @@ export const register = async (req, res) => {
     res.cookie("refreshToken", refresh, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure:true,
+      sameSite:"none",
     });
 
     res.cookie("accessToken", access, {
       httpOnly: true,
       maxAge: 15 * 60 * 1000, // 15 minutes
+      secure:true,
+      sameSite:"none",
     });
 
     return res.json({
@@ -86,11 +90,15 @@ export const login = async (req, res) => {
     res.cookie("refreshToken", refresh, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure:true,
+      sameSite:"none",
     });
 
     res.cookie("accessToken", access, {
       httpOnly: true,
       maxAge: 15 * 60 * 1000, // 15 minutes
+      secure:true,
+      sameSite:"none",
     });
 
     return res.status(200).json({
@@ -130,6 +138,8 @@ export const refresh = async (req, res) => {
     res.cookie("accessToken", access, {
       httpOnly: true,
       maxAge: 15 * 60 * 1000,
+      secure:true,
+      sameSite:"none",
     });
 
     return res.status(200).json({ ok: true });
