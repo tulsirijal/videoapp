@@ -107,7 +107,17 @@ const getLikedVideos = async(req,res)=>{
         userId:user.id
       },
       include:{
-        video:true
+        video:{
+          include:{
+            user:{select:{id:true, firstname:true, lastname:true}},
+            _count:{
+              select:{
+                likes:true,
+                comments:true
+              }
+            }
+          }
+        }
       }
     });
     return res.status(200).json({likedVideos});

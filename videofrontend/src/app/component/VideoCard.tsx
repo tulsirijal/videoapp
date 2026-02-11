@@ -21,7 +21,7 @@ const VideoCard = ({ title, url, views, createdAt, user }: Video) => {
     return "just now";
   };
 
-  const initials = `${user.firstname.charAt(0)}${user.lastname.charAt(0)}`.toUpperCase();
+  const initials = `${user?.firstname.charAt(0)}${user?.lastname.charAt(0)}`.toUpperCase();
 
   return (
     <div className="flex flex-col cursor-pointer group w-full">
@@ -43,10 +43,10 @@ const VideoCard = ({ title, url, views, createdAt, user }: Video) => {
       <div className="mt-3 flex gap-3 px-1">
 
         <div className="flex-shrink-0">
-          {user.avatar ? (
+          {user?.avatar ? (
             <img 
-              src={user.avatar} 
-              alt={user.firstname} 
+              src={user?.avatar} 
+              alt={user?.firstname} 
               className="h-10 w-10 rounded-full object-cover border border-gray-100 dark:border-gray-700" 
             />
           ) : (
@@ -64,7 +64,7 @@ const VideoCard = ({ title, url, views, createdAt, user }: Video) => {
           
           <div className="mt-1 flex flex-col">
             <p className="text-sm text-gray-500 dark:text-gray-400 font-medium hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
-              {user.firstname} {user.lastname}
+              {user?.firstname} {user?.lastname}
             </p>
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-500">
               <span>{views.toLocaleString()} views</span>

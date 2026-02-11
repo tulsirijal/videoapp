@@ -251,8 +251,7 @@ const searchVideos = async (req, res) => {
       return res.status(400).json({ message: "Search query is required" });
     }
 
-    //  `websearch_to_tsquery` handles human inputs like "cats -dogs" automatically.
-    // We join the User table to get the author's details.
+    // `websearch_to_tsquery` handles human inputs like "cats -dogs" automatically.
 
     const videos = await prisma.$queryRaw`
       SELECT 
@@ -275,7 +274,29 @@ const searchVideos = async (req, res) => {
       LIMIT 20;
     `;
 
-    res.status(200).json(videos);
+    const formattedVideos = videos.map((video)=>{
+      return {
+        id: video.id,
+        title: video.title,
+        description: video.description,
+        url: video.url,
+        thumbnail: video.thumbnail,
+        views: video.views,
+        createdAt: video.createdAt,
+        duration: video.duration,
+        user: {
+          id: video.userId,
+          firstname: video.firstname,
+          lastname: video.lastname
+        },
+        _count: {
+          likes: Number(video.likeCount) || 0, 
+          comments: Number(video.commentCount) || 0, 
+        }
+      }
+    })
+
+    res.status(200).json(formattedVideos);
   } catch (error) {
     console.error("Search Error:", error);
     res.status(500).json({ error: "Internal server error during search" });

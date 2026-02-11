@@ -46,7 +46,17 @@ export const getChannelInfoWithVideos = async (req, res) => {
     const id = parseInt(req.params.id);
     const channelInfo = await prisma.user.findUnique({
       where: { id: id },
-      include: { videos: true, _count: { select: { subscribers: true } } },
+      include: { videos: {
+        include:{
+          _count: {
+            select: {
+              likes: true,
+              comments: true,
+            },
+          },
+          user: { select: { id: true, firstname: true, lastname: true } },
+        }
+      }, _count: { select: { subscribers: true } } },
     });
     return res.status(200).json({ channelInfo });
   } catch (error) {
